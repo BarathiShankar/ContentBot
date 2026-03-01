@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { summarizeText } from "./gemini";
-import { db } from "./firebase";
+import { summarizeText } from "../Backend/openai"; // FIXED PATH
+import { db } from "../Backend/firebase"; // FIXED PATH
 import { collection, addDoc } from "firebase/firestore";
 
 function Summarizer() {
@@ -8,14 +8,18 @@ function Summarizer() {
   const [summary, setSummary] = useState("");
 
   const handleSummarize = async () => {
-    const result = await summarizeText(input);
-    setSummary(result);
+    try {
+      const result = await summarizeText(input);
+      setSummary(result);
 
-    await addDoc(collection(db, "summaries"), {
-      input,
-      summary: result,
-      createdAt: new Date(),
-    });
+      await addDoc(collection(db, "summaries"), {
+        input,
+        summary: result,
+        createdAt: new Date(),
+      });
+    } catch (error) {
+      console.error("Error summarizing:", error);
+    }
   };
 
   return (
