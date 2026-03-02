@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { summarizeText } from "../Backend/gemini";
 import { db } from "../Backend/firebase";
+import ReactMarkdown from "react-markdown";
 import { collection, addDoc } from "firebase/firestore";
 import "./App.css";
 
@@ -30,7 +31,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Smart Content Summarizer (Gemini)</h1>
+      <h1>Smart Content Summarizer</h1>
       <textarea
         placeholder="Enter text to summarize..."
         value={input}
@@ -41,7 +42,7 @@ function App() {
       </button>
       <div className="output">
         <h2>Summary:</h2>
-        <p>{summary}</p>
+  <p><ReactMarkdown>{summary}</ReactMarkdown></p>
       </div>
     </div>
   );
