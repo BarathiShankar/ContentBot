@@ -35,3 +35,38 @@ button:disabled {
   padding: 15px;
   border-radius: 8px;
 }
+/* Refinement buttons container */
+.refine-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Individual refinement buttons */
+.refine-buttons button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+  color: #fff;
+}
+
+/* Different colors for each action */
+.refine-buttons button:nth-child(1) {
+  background-color: #28a745; /* Expand → green */
+}
+.refine-buttons button:nth-child(2) {
+  background-color: #ff9800; /* Simplify → orange */
+}
+.refine-buttons button:nth-child(3) {
+  background-color: #673ab7; /* Add Detail → purple */
+}
+
+/* Hover effects */
+.refine-buttons button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}

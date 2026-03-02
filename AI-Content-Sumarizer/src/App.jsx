@@ -1,50 +1,37 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useState } from "react";
-import { summarizeText } from "../Backend/gemini";
-import { db } from "../Backend/firebase";
-import ReactMarkdown from "react-markdown";
-import { collection, addDoc } from "firebase/firestore";
-import "./App.css";
+import Login from "./Login";
+import Register from "./Register";
+import Dashboard from "./Dashboard";
 
 function App() {
-  const [input, setInput] = useState("");
-  const [summary, setSummary] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleSummarize = async () => {
-    setLoading(true);
-    try {
-      const result = await summarizeText(input);
-      setSummary(result);
-
-      await addDoc(collection(db, "summaries"), {
-        input,
-        summary: result,
-        createdAt: new Date(),
-      });
-    } catch (error) {
-      console.error("Error summarizing:", error);
-      setSummary("⚠️ Failed to generate summary.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [user, setUser] = useState(null);
 
   return (
-    <div className="container">
-      <h1>Smart Content Summarizer</h1>
-      <textarea
-        placeholder="Enter text to summarize..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-      />
-      <button onClick={handleSummarize} disabled={loading || !input}>
-        {loading ? "Summarizing..." : "Summarize"}
-      </button>
-      <div className="output">
-        <h2>Summary:</h2>
-  <p><ReactMarkdown>{summary}</ReactMarkdown></p>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        {/* Default route */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        {/* Login */}
+        <Route path="/login" element={<Login onLogin={(email) => setUser(email)} />} />
+
+        {/* Register */}
+        <Route path="/register" element={<Register onRegister={(email) => setUser(email)} />} />
+
+        {/* Dashboard (protected) */}
+        <Route
+          path="/dashboard"
+          element={
+            user ? (
+              <Dashboard user={user} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
