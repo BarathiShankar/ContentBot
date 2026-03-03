@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { auth, db } from "../Backend/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import "./Auth.css";
 
-function Register({ onRegister }) {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +19,16 @@ function Register({ onRegister }) {
     }
 
     try {
+      // Check if user already exists in Firestore
+      const userDoc = await getDoc(doc(db, "users", email));
+      if (userDoc.exists()) {
+        alert("User already exists. Please login.");
+        navigate("/login");
+        return;
+      }
+    
+
+      // Create user in Firebase Auth
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
@@ -26,7 +38,8 @@ function Register({ onRegister }) {
         createdAt: new Date(),
       });
 
-      onRegister?.(user.email);
+      // Redirect to dashboard
+      navigate("/dashboard");
     } catch (error) {
       console.error("Registration error:", error);
       alert(error.message);

@@ -1,11 +1,20 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Backend/firebase";
 
 function App() {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Router>
