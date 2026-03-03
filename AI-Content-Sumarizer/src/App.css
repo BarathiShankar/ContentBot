@@ -93,7 +93,7 @@ button:nth-of-type(1) {
 
 /* Expand button */
 .refine-buttons button:nth-of-type(2) {
-  background: #008080;
+  background: #ffb300;
   color: #fff;
   animation: glowExpand 5s infinite alternate;
 }
@@ -107,7 +107,7 @@ button:nth-of-type(1) {
 
 /* Essay button */
 .refine-buttons button:nth-of-type(4) {
-  background: #0066cc;
+  background: #ff6600;
   color: #fff;
   animation: waveEssay 7s infinite ease-in-out;
 }

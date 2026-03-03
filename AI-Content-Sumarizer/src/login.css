@@ -1,24 +1,31 @@
-/* Dark background with gradient */
-.auth-container {
+/* Page background */
+body {
+  margin: 0;
+  background: radial-gradient(rgb(55, 55, 55),rgb(56, 56, 56));
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-  color: #eaeaea;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.auth-container {
+  width: 350px;
+  padding: 40px;
+  background: #000; /* black box */
+  border: 2px solid #ffa500; /* orange border */
+  border-radius: 12px;
+  color: #ffa500;
   animation: fadeIn 1.2s ease-in-out;
-  position: relative; /* allows floating symbols */
 }
 
 /* Title with glowing animation */
 .auth-container h2 {
   font-size: 2rem;
   margin-bottom: 25px;
-  color: #00ffc6;
-  text-shadow: 0 0 8px rgba(0, 255, 198, 0.8);
-  animation: glowPulse 3s infinite alternate;
+  color: #ffa500;
+  text-shadow: 0 0 8px rgba(255, 165, 0, 0.8);
+  text-align: center;
 }
 
 /* Form styling */
@@ -26,23 +33,22 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 300px;
 }
 
 /* Input fields */
 .auth-container input {
   padding: 12px;
-  border: none;
+  border: 1px solid #ffa500;
   border-radius: 6px;
-  background: #2a2a2a;
-  color: #eaeaea;
+  background: #d3d3d3; /* light grey textbox */
+  color: #000;
   font-size: 1rem;
   outline: none;
-  transition: box-shadow 0.3s ease;
 }
 
 .auth-container input:focus {
-  box-shadow: 0 0 12px #00ffc6;
+  border-color: #ff6600;
+  box-shadow : 0 0 5px rgba(255, 165, 0, 0.5);
 }
 
 /* Button styling */
@@ -50,8 +56,8 @@
   padding: 12px;
   border: none;
   border-radius: 6px;
-  background: #00ffc6;
-  color: #0f0f0f;
+  background: #ffa500;
+  color: #000;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -60,7 +66,7 @@
 
 .auth-container button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0 15px #00ffc6;
+  box-shadow: 0 0 15px rgba(255,165,0,0.6);
 }
 
 /* Link styling */
@@ -68,40 +74,26 @@
   margin-top: 20px;
   font-size: 0.9rem;
   color: #aaa;
+  text-align: center;
 }
 
 .auth-container a {
-  color: #00ffc6;
+  color: #ffa500;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .auth-container a:hover {
-  color: #00ffaa;
+  color: #ff6600;
 }
 
-/* Keyframes for animations */
+/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes glowPulse {
-  from { text-shadow: 0 0 8px rgba(0, 255, 198, 0.8); }
-  to { text-shadow: 0 0 20px rgba(0, 255, 198, 1); }
-}
-
-/* Floating symbolic animations */
-@keyframes floatingSymbols {
-  0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
-  50% { transform: translateY(-20px) rotate(180deg); opacity: 0.6; }
-  100% { transform: translateY(0) rotate(360deg); opacity: 0.3; }
-}
-
-.symbol {
-  position: absolute;
-  font-size: 2rem;
-  color: #00ffc6;
-  opacity: 0.3;
-  animation: floatingSymbols 6s infinite ease-in-out;
+  from { text-shadow: 0 0 8px rgba(255, 165, 0, 0.8); }
+  to { text-shadow: 0 0 20px rgba(255, 165, 0, 1); }
 }
