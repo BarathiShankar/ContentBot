@@ -3,6 +3,7 @@ import { useState,useEffect } from "react";
 import Login from "./Login";
 import Register from "./Register";
 import Dashboard from "./Dashboard";
+import History from "./history"; // <-- add missing import
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../Backend/firebase";
 
@@ -39,7 +40,10 @@ function App() {
             )
           }
         />
+          <Route path="/history" element={user ? <History /> : <Navigate to="/login" />} />
+
       </Routes>
+    
     </Router>
   );
 }

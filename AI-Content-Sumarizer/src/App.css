@@ -1,72 +1,157 @@
-.container {
-  max-width: 600px;
-  margin: 40px auto;
-  text-align: center;
-  font-family: Arial, sans-serif;
+body {
+  margin: 0;
+  background: #3a3a3a; /* full black background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffa500; /* orange text */
+ 
 }
 
-textarea {
-  width: 100%;
-  height: 150px;
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 14px;
-}
-
-button {
-  padding: 10px 20px;
-  margin: 10px 0;
-  background-color: #4cafef;
-  border: none;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-
-.output {
-  margin-top: 20px;
-  text-align: left;
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-}
-/* Refinement buttons container */
-.refine-buttons {
-  margin-top: 20px;
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-/* Individual refinement buttons */
-.refine-buttons button {
+.history-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #222;
+  color: #ffa500;
   padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  animation: pulseHistory 3s infinite;
+}
+
+.history-btn:hover {
+  box-shadow: 0 0 12px rgba(255,165,0,0.6);
+}
+
+/* Main card container */
+.container {
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #111; /* shaded black card */
+  border-radius: 12px;
+  animation: fadeIn 1s ease-in-out;
+   align-items : cemter;
+}
+
+/* Title */
+.container h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 25px;
+  color: black;
+  font-family :'Times New Roman', Times, serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Textarea */
+textarea {
+  align-self: center;
+  width: 100%;
+  min-height: 120px;
+  padding: 15px;
+  border: 1px solid #ffa500;
+  border-radius: 8px;
+  resize: vertical;
+  font-size: 1rem;
+  line-height: 1.4;
+  background: #d3d3d3; /* light grey */
+  color: #000;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 12px rgba(255, 102, 0, 0.6);
+  outline: none;
+}
+
+/* Buttons base */
+button {
+  padding: 12px 20px;
+  margin: 10px 5px;
   border: none;
   border-radius: 6px;
-  font-weight: bold;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: transform 0.2s, background-color 0.3s;
-  color: #fff;
+  transition: transform 0.2s ease;
 }
 
-/* Different colors for each action */
-.refine-buttons button:nth-child(1) {
-  background-color: #28a745; /* Expand → green */
-}
-.refine-buttons button:nth-child(2) {
-  background-color: #ff9800; /* Simplify → orange */
-}
-.refine-buttons button:nth-child(3) {
-  background-color: #673ab7; /* Add Detail → purple */
-}
-
-/* Hover effects */
-.refine-buttons button:hover {
+button:hover {
   transform: translateY(-2px);
-  opacity: 0.9;
+}
+
+/* Summarize button */
+button:nth-of-type(1) {
+  background: #ff6600;
+  color: #fff;
+  animation: bounceSummarize 4s infinite;
+}
+
+/* Expand button */
+.refine-buttons button:nth-of-type(2) {
+  background: #008080;
+  color: #fff;
+  animation: glowExpand 5s infinite alternate;
+}
+
+/* Simplify button */
+.refine-buttons button:nth-of-type(3) {
+  background: #800080;
+  color: #fff;
+  animation: rotateSimplify 6s infinite linear;
+}
+
+/* Essay button */
+.refine-buttons button:nth-of-type(4) {
+  background: #0066cc;
+  color: #fff;
+  animation: waveEssay 7s infinite ease-in-out;
+}
+
+/* Output section */
+.output {
+  margin-top: 30px;
+  padding: 20px;
+  background: #d3d3d3d5; /* dark card for output */
+  border-radiurgb(91, 91, 91)px;
+  border: 1px solid #ffa500;
+}
+
+.output h2 {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  color: #ffa500;
+}
+
+.output div {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ffa500;
+}
+
+/* Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseHistory {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+@keyframes bounceSummarize {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+
+@keyframes waveEssay {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
 }

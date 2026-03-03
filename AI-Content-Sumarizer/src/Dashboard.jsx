@@ -1,40 +1,58 @@
 import { useState } from "react";
-import { refineSummary,summarizeText } from "../Backend/gemini";
-import { db } from "../Backend/firebase";
+import { refineSummary, summarizeText } from "../Backend/gemini";
+import { db, auth } from "../Backend/firebase";
 import ReactMarkdown from "react-markdown";
 import { collection, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 function App() {
   const [input, setInput] = useState("");
   const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(false);
-  const handleRefine = async (mode) => {
-  setLoading(true);
-  try {
-    const refined = await refineSummary(summary, mode);
-    setSummary(refined);
-  } catch (error) {
-    console.error("Error refining summary:", error);
-  } finally {
-    setLoading(false);
-  }
-};
+  const navigate = useNavigate();
+
+  const saveSummary = async (text) => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    try {
+      await addDoc(collection(db, "users", user.uid, "summaries"), {
+        text,
+        createdAt: new Date(),
+      });
+    } catch (error) {
+      console.error("Error saving summary:", error);
+    }
+  };
 
   const handleSummarize = async () => {
     setLoading(true);
     try {
       const result = await summarizeText(input);
       setSummary(result);
-
-      await addDoc(collection(db, "summaries"), {
-        input,
-        summary: result,
-        createdAt: new Date(),
-      });
+      await saveSummary(result);
     } catch (error) {
       console.error("Error summarizing:", error);
       setSummary("⚠️ Failed to generate summary.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRefine = async (mode) => {
+    if (!summary) {
+      alert("Generate a summary first!");
+      return;
+    }
+    setLoading(true);
+    try {
+      const refined = await refineSummary(summary, mode);
+      setSummary(refined);
+      await saveSummary(refined);
+    } catch (error) {
+      console.error("Error refining summary:", error);
+      setSummary("⚠️ Failed to refine summary.");
     } finally {
       setLoading(false);
     }
@@ -51,17 +69,19 @@ function App() {
       <button onClick={handleSummarize} disabled={loading || !input}>
         {loading ? "Summarizing..." : "Summarize"}
       </button>
+      <h2>Summary:</h2>
       <div className="output">
-        <h2>Summary:</h2>
-        
-
-  <p><ReactMarkdown>{summary}</ReactMarkdown></p>
+        <ReactMarkdown>{summary}</ReactMarkdown>
       </div>
+
       <div className="refine-buttons">
-  <button onClick={() => handleRefine("expand")}>Expand</button>
-  <button onClick={() => handleRefine("simplify")}>Simplify</button>
-  <button onClick={() => handleRefine("detail")}>Write As Essay</button>
-</div>
+        <button className="history-btn" onClick={() => navigate("/history")}>
+          History
+        </button>
+        <button onClick={() => handleRefine("expand")}>Expand</button>
+        <button onClick={() => handleRefine("simplify")}>Simplify</button>
+        <button onClick={() => handleRefine("detail")}>Write As Essay</button>
+      </div>
     </div>
   );
 }
