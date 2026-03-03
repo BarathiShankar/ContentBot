@@ -1,0 +1,161 @@
+body {
+  background: #2e2e2e; /* black background */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffa500; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Main container card - larger size */
+.container { /* larger container */
+  padding : 50px 250px;
+  background: #111; /* shaded black card */
+  border-radius: 16px;
+  border: 3px solid #ffa500; /* orange border */
+  animation: fadeIn 1s ease-in-out;
+  text-align: center; 
+}
+
+/* Title */
+.container h1 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  color: #ffa500;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.container h2{
+  font-size: 1.5rem;
+  margin-top: 30px;
+  color: #ffa60095;
+}
+/* Textarea */
+textarea {
+    margin : 10px;
+  width: 90%;
+  min-height: 150px;
+  padding: 15px;
+  border: 2px solid #ffa500;
+  border-radius: 10px;
+  resize: vertical;
+  font-size: 1rem;
+  line-height: 1.4;
+  background: #d3d3d3; /* light grey */
+  color: #000;
+  margin-bottom : 20px;
+}
+
+
+.output {
+  margin-top: 30px;
+  padding: 25px;
+  color : white;
+  background: #000;
+  border-radius: 10px;
+  border: 1px solid #ffa500;
+  text-align: left;
+ margin-bottom : 30px;
+}
+
+.output h2 {
+  margin-bottom: 15px;
+  font-size: 1.6rem;
+  color: #ffa500;
+}
+
+.output div {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ffa500;
+}
+
+
+
+/* Expand button */
+.bt1 {
+  background: #912fcf; /* orange */
+  animation: bounceUpDown 3s infinite;
+  color : white;
+  margin : 0 10px;
+  border-radius: 10px;
+  padding: 12px 20px;
+   transition: transform 0.5s ease;
+   font-size : 1rem;
+  
+}
+
+/* Simplify button */
+.bt2 {
+  background: #6A1B9A; /* purple */
+  animation: bounceUpDown 3.5s infinite;
+  color : white;
+  margin : 0 10px;
+    border-radius: 10px;
+  padding: 12px 20px;
+   transition: transform 0.5s ease;
+   font-size : 1rem;
+}
+
+/* Essay button */
+.bt3 {
+  background: #5a0c8b; /* blue */
+  animation: bounceUpDown 4s infinite;
+  color : white;
+  margin : 0 10px;
+border-radius: 10px;
+  padding: 12px 20px;
+ transition: transform 0.5s ease;
+ font-size : 1rem;
+}
+
+/* Summarize button */
+.btsum {
+    transition: transform 0.5s ease;
+  background: #ff9900;
+  border-radius: 10px;
+  padding: 15px 20px;
+  color : black;
+  font-size : 1.1rem;
+}
+.btsum:hover{
+    transform : scale(1.03);
+    background : #ff8902;
+}
+/* Top-right History button */
+.history-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color : black;
+  font-size : 1rem;
+  background-color: #00fff7;
+}
+.bt1:hover {
+      transform : scale(1.03);
+    background : #9d00ff;
+}
+.bt2:hover {
+      transform : scale(1.03);
+    background : #912fcf;
+}
+.bt3:hover {
+      transform : scale(1.03);
+    background : #912fcf;
+}
+.history-btn:hover {
+  transform: translateY(-2px) 0.3s ease;
+  box-shadow: 0 0 15px rgba(0,255,247,0.8);
+}
+
+/* Up-down animation */
+@keyframes bounceUpDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}

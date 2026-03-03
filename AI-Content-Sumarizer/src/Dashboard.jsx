@@ -4,7 +4,7 @@ import { db, auth } from "../Backend/firebase";
 import ReactMarkdown from "react-markdown";
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
+import "./Dashboard.css";
 
 function App() {
   const [input, setInput] = useState("");
@@ -66,23 +66,21 @@ function App() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <button onClick={handleSummarize} disabled={loading || !input}>
+      <button className="btsum" onClick={handleSummarize} disabled={loading || !input}>
         {loading ? "Summarizing..." : "Summarize"}
       </button>
       <h2>Summary:</h2>
       <div className="output">
         <ReactMarkdown>{summary}</ReactMarkdown>
       </div>
-
-      <div className="refine-buttons">
-        <button className="history-btn" onClick={() => navigate("/history")}>
+<button className="history-btn" onClick={() => navigate("/history")}>
           History
         </button>
-        <button onClick={() => handleRefine("expand")}>Expand</button>
-        <button onClick={() => handleRefine("simplify")}>Simplify</button>
-        <button onClick={() => handleRefine("detail")}>Write As Essay</button>
+        <button className="bt1" onClick={() => handleRefine("expand")}>Expand</button>
+        <button className="bt2" onClick={() => handleRefine("simplify")}>Simplify</button>
+        <button className="bt3" onClick={() => handleRefine("detail")}>Write As Essay</button>
       </div>
-    </div>
+    
   );
 }
 

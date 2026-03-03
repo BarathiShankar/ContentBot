@@ -40,8 +40,9 @@ function History() {
 
 
   return (
-    <div className="container">
+    <div>
       <h2>Your Summary History</h2>
+    <div className="container">
       {summaries.length > 0 ? (
         <ul>
           {summaries.map((s) => (
@@ -58,8 +59,10 @@ function History() {
       ) : (
         <p>No summaries yet. Create one from the dashboard!</p>
       )}
-      <button onClick={() => window.history.back()}>Back to Dashboard</button>
+    
     </div>
+      <button id="back" onClick={() => window.history.back()}>Back to Dashboard</button>
+      </div>
   );
 }
 

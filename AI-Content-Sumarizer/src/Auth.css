@@ -15,9 +15,7 @@ Dark background with gradient
 .auth-container h2 {
   font-size: 2rem;
   margin-bottom: 25px;
-  color: #00ffc6;
-  text-shadow: 0 0 8px rgba(0, 255, 198, 0.8);
-  animation: glowPulse 3s infinite alternate;
+  color: blanchedalmond;
 }
 
 /* Form styling */
@@ -40,16 +38,13 @@ Dark background with gradient
   transition: box-shadow 0.3s ease;
 }
 
-.auth-container input:focus {
-  box-shadow: 0 0 12px #00ffc6;
-}
 
 /* Button styling */
 .auth-container button {
   padding: 12px;
   border: none;
   border-radius: 6px;
-  background: #00ffc6;
+  background: #ffd500;
   color: #0f0f0f;
   font-size: 1rem;
   font-weight: bold;
@@ -57,10 +52,6 @@ Dark background with gradient
   transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-.auth-container button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px #00ffc6;
-}
 
 /* Keyframes for animations */
 @keyframes fadeIn {
@@ -86,4 +77,33 @@ Dark background with gradient
   color: #00ffc6;
   opacity: 0.3;
   animation: floatingSymbols 6s infinite ease-in-out;
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000; /* black background */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffa500; /* orange text */
+  z-index: 9999;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #333;
+  border-top: 6px solid #ffa500; /* orange spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
