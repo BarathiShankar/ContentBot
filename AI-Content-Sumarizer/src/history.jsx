@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { db, auth } from "../Backend/firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import "./history.css";
 
 function History() {
   const [summaries, setSummaries] = useState([]);
+  const navigate = useNavigate(); // 🔹 ADDED: hook for navigation
 
   useEffect(() => {
     const fetchSummaries = async () => {
@@ -15,7 +17,6 @@ function History() {
       }
 
       try {
-        // ✅ Query the summaries subcollection under the logged-in user
         const q = query(
           collection(db, "users", user.uid, "summaries"),
           orderBy("createdAt", "desc")
@@ -23,7 +24,6 @@ function History() {
 
         const querySnapshot = await getDocs(q);
 
-        // ✅ Map documents safely
         const data = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
@@ -36,33 +36,35 @@ function History() {
     };
 
     fetchSummaries();
-  }, [/* empty: no external dependencies */]);
-
+  }, []); 
 
   return (
     <div>
       <h2>Your Summary History</h2>
-    <div className="container">
-      {summaries.length > 0 ? (
-        <ul>
-          {summaries.map((s) => (
-            <li key={s.id}>
-              <p>{s.text}</p>
-              <small>
-                {s.createdAt && s.createdAt.toDate
-                  ? s.createdAt.toDate().toLocaleString()
-                  : "No timestamp"}
-              </small>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No summaries yet. Create one from the dashboard!</p>
-      )}
-    
-    </div>
-      <button id="back" onClick={() => window.history.back()}>Back to Dashboard</button>
+      <div className="container">
+        {summaries.length > 0 ? (
+          <ul>
+            {summaries.map((s) => (
+              <li key={s.id}>
+                <p>{s.text}</p>
+                <small>
+                  {s.createdAt && s.createdAt.toDate
+                    ? s.createdAt.toDate().toLocaleString()
+                    : "No timestamp"}
+                </small>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No summaries yet. Create one from the dashboard!</p>
+        )}
       </div>
+
+      {/* 🔹 CHANGED: use navigate instead of window.history.back */}
+      <button id="back" onClick={() => navigate("/dashboard")}>
+        Back to Dashboard
+      </button>
+    </div>
   );
 }
 

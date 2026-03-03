@@ -31,6 +31,7 @@ function App() {
     try {
       const result = await summarizeText(input);
       setSummary(result);
+
       await saveSummary(result);
     } catch (error) {
       console.error("Error summarizing:", error);
@@ -49,6 +50,7 @@ function App() {
     try {
       const refined = await refineSummary(summary, mode);
       setSummary(refined);
+
       await saveSummary(refined);
     } catch (error) {
       console.error("Error refining summary:", error);
@@ -73,14 +75,18 @@ function App() {
       <div className="output">
         <ReactMarkdown>{summary}</ReactMarkdown>
       </div>
-<button className="history-btn" onClick={() => navigate("/history")}>
-          History
-        </button>
+
+      {/* 🔹 History button fixed top-right */}
+      <button className="history-btn" onClick={() => navigate("/history")}>
+        History
+      </button>
+
+      <div className="refine-buttons">
         <button className="bt1" onClick={() => handleRefine("expand")}>Expand</button>
         <button className="bt2" onClick={() => handleRefine("simplify")}>Simplify</button>
         <button className="bt3" onClick={() => handleRefine("detail")}>Write As Essay</button>
       </div>
-    
+    </div>
   );
 }
 
