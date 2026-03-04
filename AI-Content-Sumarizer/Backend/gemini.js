@@ -11,6 +11,7 @@ Do not include any introductory phrases like "Here’s a summary".
 
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+    //other models - Gemini 3.0 Flash,Gemini 3.0 Flash-Lite,Gemini 2.5 Flash
     const result = await model.generateContent(prompt);
     return result.response.text();
   } catch (error) {
