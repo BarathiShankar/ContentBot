@@ -2,7 +2,7 @@ import { useState } from "react";
 import { refineSummary, summarizeText } from "../Backend/gemini";
 import { db, auth } from "../Backend/firebase";
 import ReactMarkdown from "react-markdown";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"; // 🔹 CHANGED: use serverTimestamp
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
@@ -17,10 +17,13 @@ function App() {
     if (!user) return;
 
     try {
-      await addDoc(collection(db, "users", user.uid, "summaries"), {
+      const docRef = await addDoc(collection(db, "users", user.uid, "summaries"), {
         text,
-        createdAt: new Date(),
+        createdAt: serverTimestamp(), // 🔹 CHANGED: Firestore server timestamp
       });
+
+      // 🔹 NEW: update local state immediately so history shows without refresh
+      setSummary(text);
     } catch (error) {
       console.error("Error saving summary:", error);
     }
@@ -32,7 +35,7 @@ function App() {
       const result = await summarizeText(input);
       setSummary(result);
 
-      await saveSummary(result);
+      await saveSummary(result); // 🔹 ensures DB + local state update
     } catch (error) {
       console.error("Error summarizing:", error);
       setSummary("⚠️ Failed to generate summary.");
@@ -51,7 +54,7 @@ function App() {
       const refined = await refineSummary(summary, mode);
       setSummary(refined);
 
-      await saveSummary(refined);
+      await saveSummary(refined); // 🔹 ensures DB + local state update
     } catch (error) {
       console.error("Error refining summary:", error);
       setSummary("⚠️ Failed to refine summary.");
@@ -59,7 +62,14 @@ function App() {
       setLoading(false);
     }
   };
+  const handleLogout = async () => 
+    { try { await auth.signOut();
+       navigate("/login"); 
+    } catch (error) 
+    { console.error("Error logging out:", error);
 
+     }
+    };
   return (
     <div className="container">
       <h1>Smart Content Summarizer</h1>
@@ -76,11 +86,12 @@ function App() {
         <ReactMarkdown>{summary}</ReactMarkdown>
       </div>
 
-      {/* 🔹 History button fixed top-right */}
       <button className="history-btn" onClick={() => navigate("/history")}>
         History
       </button>
-
+        <button className="logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
       <div className="refine-buttons">
         <button className="bt1" onClick={() => handleRefine("expand")}>Expand</button>
         <button className="bt2" onClick={() => handleRefine("simplify")}>Simplify</button>

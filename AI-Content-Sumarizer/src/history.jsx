@@ -6,7 +6,7 @@ import "./history.css";
 
 function History() {
   const [summaries, setSummaries] = useState([]);
-  const navigate = useNavigate(); // 🔹 ADDED: hook for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSummaries = async () => {
@@ -19,7 +19,7 @@ function History() {
       try {
         const q = query(
           collection(db, "users", user.uid, "summaries"),
-          orderBy("createdAt", "desc")
+          orderBy("createdAt", "desc") // 🔹 works correctly with serverTimestamp
         );
 
         const querySnapshot = await getDocs(q);
@@ -36,7 +36,7 @@ function History() {
     };
 
     fetchSummaries();
-  }, []); 
+  }, []);
 
   return (
     <div>
@@ -60,7 +60,6 @@ function History() {
         )}
       </div>
 
-      {/* 🔹 CHANGED: use navigate instead of window.history.back */}
       <button id="back" onClick={() => navigate("/dashboard")}>
         Back to Dashboard
       </button>

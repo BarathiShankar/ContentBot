@@ -10,7 +10,7 @@ body {
 
 /* Main container card - larger size */
 .container { /* larger container */
-  padding : 50px 250px;
+  padding : 50px 300px;
   background: #111; /* shaded black card */
   border-radius: 16px;
   border: 3px solid #ffa500; /* orange border */
@@ -72,8 +72,22 @@ textarea {
 }
 
 
-
-/* Expand button */
+.logout-btn 
+{ position: fixed;
+   top: 70px; 
+ right: 20px; 
+  border-radius: 6px;
+ padding: 12px 20px;
+ font-size : 1rem; 
+ cursor: pointer;
+ color: #fff;
+   background: #cc0000;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   } 
+.logout-btn:hover
+ { transform: scale(1.07);
+  background: #ff1111;
+}
 .bt1 {
   background: #912fcf; /* orange */
   animation: bounceUpDown 3s infinite;
