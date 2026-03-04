@@ -1,8 +1,0 @@
-.auth-container input:focus {
-  box-shadow: 0 0 8px rgba(255, 170, 0, 0.864);
-}
-.auth-container button:hover {
-  transform: translateY(-2px);
-  background-color: #ffbb00;
-  box-shadow : #ffbb00;
-}

@@ -1,18 +1,32 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useState,useEffect } from "react";
-import Login from "./Login";
-import Register from "./Register";
-import Dashboard from "./Dashboard";
-import History from "./history"; // <-- add missing import
+import { useState, useEffect } from "react";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Dashboard from "./components/Dashboard";
+import History from "./components/History";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../Backend/firebase";
+import { auth } from "../backend/firebase";
+
+// Protected Route Component
+const ProtectedRoute = ({ element, user, isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className="loading-container">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+  return user ? element : <Navigate to="/login" replace />;
+};
 
 function App() {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setIsLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -20,30 +34,33 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Default route */}
-        <Route path="/" element={<Navigate to="/login" />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        {/* Login */}
-        <Route path="/login" element={<Login onLogin={(email) => setUser(email)} />} />
+        {/* Default Route */}
+        <Route
+          path="/"
+          element={<Navigate to={user ? "/dashboard" : "/login"} replace />}
+        />
 
-        {/* Register */}
-        <Route path="/register" element={<Register onRegister={(email) => setUser(email)} />} />
-
-        {/* Dashboard (protected) */}
+        {/* Protected Routes */}
         <Route
           path="/dashboard"
           element={
-            user ? (
-              <Dashboard user={user} />
-            ) : (
-              <Navigate to="/login" />
-            )
+            <ProtectedRoute element={<Dashboard />} user={user} isLoading={isLoading} />
           }
         />
-          <Route path="/history" element={user ? <History /> : <Navigate to="/login" />} />
+        <Route
+          path="/history"
+          element={
+            <ProtectedRoute element={<History />} user={user} isLoading={isLoading} />
+          }
+        />
 
+        {/* 404 Catch-all */}
+        <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} replace />} />
       </Routes>
-    
     </Router>
   );
 }

@@ -1,46 +1,40 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-export async function summarizeText(inputText) {
 
-  const prompt = `
-Summarize the following text in bullet points only.
-Do not include any introductory phrases like "Here’s a summary".
-\n\n${inputText}
-`;
-
+export const summarizeText = async (text) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-    //other models - Gemini 3.0 Flash,Gemini 3.0 Flash-Lite,Gemini 2.5 Flash
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const prompt = `Please provide a concise and clear summary of the following text as (not as md file) bulltins (dont write here's the summary and all those stuffs):\n\n${text}`;
+    
     const result = await model.generateContent(prompt);
-    return result.response.text();
+    const response = await result.response;
+    return response.text();
   } catch (error) {
-    console.error("Gemini API error:", error);
-    if (error.message?.includes("API_KEY_INVALID")) {
-      return "⚠️ Invalid Gemini API key.";
+    console.error("Error summarizing text:", error);
+    throw error;
+  }
+};
+
+export const refineSummary = async (summary, mode) => {
+  try {
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    
+    let prompt = "";
+    
+    if (mode === "expand") {
+      prompt = `Please expand on this summary with more details and context :\n\n${summary}`;
+    } else if (mode === "simplify") {
+      prompt = `Please simplify this summary to make it more concise and easier to understand as bulltins:\n\n${summary}`;
+    } else if (mode === "detail") {
+      prompt = `Please provide a these deayils as an essay format:\n\n${summary}`;
     }
-    return "⚠️ Failed to generate summary.";
-  }
-}
-
-// Refinement function
-export async function refineSummary(summary, mode) {
-  let prompt = "";
-
-  if (mode === "expand") {
-    prompt = `Make it more Enlarged, but answer in bulletins only:\n\n${summary}`;
-  } else if (mode === "simplify") {
-    prompt = `Simplify the following as bulletins:\n\n${summary}`;
-  } else if (mode === "detail") {
-    prompt = `Write like an essay, make it more descriptive:\n\n${summary}`;
-  }
-
-  try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+    
     const result = await model.generateContent(prompt);
-    return result.response.text();
+    const response = await result.response;
+    return response.text();
   } catch (error) {
-    console.error("Gemini refinement error:", error);
-    return "⚠️ Failed to refine summary.";
+    console.error("Error refining summary:", error);
+    throw error;
   }
-}
+};
