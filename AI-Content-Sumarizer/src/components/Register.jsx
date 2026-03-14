@@ -11,7 +11,7 @@ function Register() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const strongPasswordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])/;
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
@@ -20,12 +20,12 @@ function Register() {
       setError("Passwords do not match.");
       return;
     }
+    if(!strongPasswordRegex.test(password))
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
+      {
+        setError("Weak Password");
+        return;
+      }
     setLoading(true);
 
     try {

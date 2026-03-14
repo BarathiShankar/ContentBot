@@ -37,7 +37,6 @@ function Dashboard() {
       setLoading(false);
     }
   };
-
   const handleRefine = async (mode) => {
     if (!summary) return;
     setLoading(true);
@@ -63,7 +62,7 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1>Smart Content Summarizer</h1>
+        <h1>CONTENTBOT - V2</h1>
         <nav className="dashboard-nav">
           <Link to="/dashboard" className="nav-link active">Dashboard</Link>
           <Link to="/history" className="nav-link">History</Link>

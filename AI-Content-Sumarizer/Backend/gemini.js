@@ -10,20 +10,14 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
-// Initialize Gemini
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
-// Initialize Firestore + Auth
 const db = getFirestore();
 const auth = getAuth();
-
-/**
- * Summarize text and store result in Firestore
- */
 export const summarizeText = async (text) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-    const prompt = `Please provide a concise and clear summary of the following text as without .md notations bullet points:\n\n${text}`;
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Using a more stable model for accuracy
+    const prompt = `Please provide a concise, accurate, and clear summary of the following text in bullet points (without any .md notations or markdown formatting):\n\n${text}\n\nEnsure the summary captures the main ideas and key details precisely.`;
     
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -46,37 +40,45 @@ export const summarizeText = async (text) => {
     throw error;
   }
 };
-
-/**
- * Refine summary (expand, simplify, essay) using previous summary from Firestore
- */
-export const refineSummary = async (mode) => {
+export const refineSummary = async (cursum,mode) => {
   try {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    // Fetch the last summary from Firestore
     const user = auth.currentUser;
     if (!user) throw new Error("User not logged in");
 
-     const q = query(
+    const q = query(
       collection(db, "users", user.uid, "summaries"),
       orderBy("createdAt", "desc"),
       limit(1)
     );
 
-    if (!lastSummaryDoc.exists()) throw new Error("No summary found in DB");
+    const querySnapshot = await getDocs(q);
+    const lastSummaryDoc = querySnapshot.docs[0];
+
+    if (!lastSummaryDoc) throw new Error("No summary found in DB");
 
     const summary = lastSummaryDoc.data().output;
 
-    // Build prompt based on mode
-    let prompt = "";
-    if (mode === "expand") {
-      prompt = `Expand this summary with more details and context,in same bulletin points format:\n\n${summary}`;
-    } else if (mode === "simplify") {
-      prompt = `Simplify this summary into more concise bullet points,by extracting keywords:\n\n${summary}`;
-    } else if (mode === "essay") {
-      prompt = `Convert this summary into a detailed essay format:\n\n${summary}`;
-    }
+    // Define clear instructions for each mode
+const modes = {
+  expand: "Add more technical detail, context, and background information while keeping it as a clear list. Do not repeat the same information.",
+  simplify: "Strip away all jargon. Rewrite this for a 5th grader using only the most essential keywords and 3-4 brief points.",
+  essay: "Convert these bullet points into a formal, professional three-paragraph essay with an introduction, body, and conclusion."
+};
+
+// Use a clean, structured prompt
+const prompt = `
+  TASK: ${modes[mode]}
+  
+  ORIGINAL SUMMARY:
+  ${cursum}
+  
+  CONSTRAINTS: 
+  - Output ONLY the result. 
+  - No "Here is your essay" intro.
+  - No Markdown formatting or symbols like # or *.
+`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;

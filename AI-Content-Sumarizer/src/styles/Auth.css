@@ -7,7 +7,6 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
   color: #eaeaea;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeIn 1.2s ease-in-out;
   padding: 20px;
 }
@@ -19,7 +18,7 @@
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(255, 215, 0, 0.15);
-  border: 1px solid #ffbf00;
+  border: 1px solid #ffae00;
 }
 
 /* Title with styling */
@@ -51,8 +50,8 @@
 
 .auth-card input:focus {
   box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
-  border: 1px solid #ffbf00;
-  border-color: #ffd500;
+  border: 1px solid #ffaa00;
+  border-color: #ffa600;
 }
 
 .auth-card input:disabled {
@@ -66,7 +65,7 @@
   padding: 12px;
   border: none;
   border-radius: 6px;
-  background: #ffd500;
+  background: #ff9900;
   color: #0f0f0f;
   font-size: 1rem;
   font-weight: bold;
