@@ -84,6 +84,10 @@ AI-Content-Sumarizer/
 ├── package.json
 └── vite.config.js
 ```
+## Sample Output 
+Authentication - ![Login Screenshot](./assets/login_pic.png)
+Working Model - ![Summarized Screenshot](./assets/Dash_pic.png)
+
 
 ## 📄 License
 MIT License
