@@ -1,4 +1,4 @@
-# ContentBot-V1📝
+# ContentBot-V2📝
 
 A **summary tracker for shrinking/expanding notes** that helps students convert their study material into points, essays or stories.  
 This React + Firebase web application uses the Gemini API to power the summarization and refinement logic.  Users can log in, create summaries, refine them in several modes, and view a history of past results with timestamps.
