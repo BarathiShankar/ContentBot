@@ -87,8 +87,8 @@ AI-Content-Sumarizer/
 ## Sample Output 
 <table>
   <tr>
-    <td><img src="./assets/login_pic.png" width="300"></td>
-    <td><img src="./assets/Dash_pic.png" width="300"></td>
+    <td><img src=".\AI-Content-Sumarizer\src\assets\Login_pic.png" width="300"></td>
+    <td><img src=".\AI-Content-Sumarizer\src/assets/Dash_pic.png" width="300"></td>
   </tr>
 </table>
 
