@@ -85,9 +85,9 @@ AI-Content-Sumarizer/
 └── vite.config.js
 ```
 ## Sample Output 
-<table>
+<table border="1">
   <tr>
-    <td><img src=".\AI-Content-Sumarizer\src\assets\Login_pic.png" width="300"></td>
+    <td><img src=".\AI-Content-Sumarizer\src\assets\login_pic.png" width="300"></td>
     <td><img src=".\AI-Content-Sumarizer\src/assets/Dash_pic.png" width="300"></td>
   </tr>
 </table>
