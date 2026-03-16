@@ -48,12 +48,14 @@ function Register() {
             type="email"
             placeholder="Email"
             value={email}
+            maxLength="25"
             onChange={(e) => setEmail(e.target.value)}
             required
             disabled={loading}
           />
           <input
             type="password"
+            maxLength="15"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -64,6 +66,7 @@ function Register() {
             type="password"
             placeholder="Confirm Password"
             value={confirmPassword}
+            maxLength="15"
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             disabled={loading}

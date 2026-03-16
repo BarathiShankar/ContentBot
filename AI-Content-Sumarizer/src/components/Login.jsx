@@ -35,6 +35,7 @@ function Login() {
           <input
             type="email"
             placeholder="Email"
+            maxLength="30"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -44,6 +45,7 @@ function Login() {
             type="password"
             placeholder="Password"
             value={password}
+            maxLength="15"
             onChange={(e) => setPassword(e.target.value)}
             required
             disabled={loading}
