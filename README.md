@@ -95,5 +95,8 @@ AI-Content-Sumarizer/
 ## 📄 License
 MIT License
 
+## 🚀 Live Demo
+[AI Summarizer App](https://ai-summarizer-e401e.web.app/login)
+
 ---
 Built with ❤️ for learners by R Barathi Shankar.
