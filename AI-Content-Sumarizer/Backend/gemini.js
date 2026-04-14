@@ -9,15 +9,16 @@ import {
   addDoc 
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 const db = getFirestore();
 const auth = getAuth();
 export const summarizeText = async (text) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }); // Using a more stable model for accuracy
-    const prompt = `Please provide a concise, accurate, and clear summary of the following text in bullet points (without any .md notations or markdown formatting):\n\n${text}\n\nEnsure the summary captures the main ideas and key details precisely.`;
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const prompt = `Please provide a concise, accurate, and clear summary of the following text 
+    in bullet points (without any .md notations or markdown formatting):\n\n${text}\n
+    \nEnsure the summary captures the main ideas and key details precisely.`;
     
     const result = await model.generateContent(prompt);
     const response = await result.response;
