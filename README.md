@@ -35,14 +35,18 @@ This React + Firebase web application uses the Gemini API to power the summariza
   npm install
   ```
 
-3. **Configure Firebase**
+3. **Create your environment file**
+  - Copy the example file:
+    ```bash
+    cp AI-Content-Summarizer/.env.example AI-Content-Summarizer/.env
+    ```
+  - Fill in your Gemini API key and Firebase config values.
+  - Do not commit `AI-Content-Summarizer/.env` to git.
+
+4. **Configure Firebase**
   - Create a Firebase project and enable Email/Password authentication.
   - Add a Firestore database (start in test mode for development).
-  - Copy the config object into `Backend/firebase.js`.
-
-4. **Set up Gemini API key**
-  - Obtain a key from the Gemini (or Google Bard) service.
-  - Add it to a `.env` file as `VITE_GEMINI_API_KEY=<your_key>`.
+  - Use the Firebase values in `AI-Content-Summarizer/.env`.
 
 5. **Start development server**
   ```bash
