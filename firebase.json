@@ -1,6 +1,7 @@
 {
+  
   "hosting": {
-    "public": "dist",
+    "public": "AI-Content-Sumarizer/dist", 
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -12,7 +13,8 @@
         "destination": "/index.html"
       }
     ]
-  },
+  }
+,
   "firestore": {
     "database": "(default)",
     "location": "asia-south1",
